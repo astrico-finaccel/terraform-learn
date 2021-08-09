@@ -1,5 +1,5 @@
 provider "aws" {
-  region  = "ap-southeast-1"
+  region = "ap-southeast-1"
 }
 
 resource "aws_vpc" "ast-test" {
@@ -14,7 +14,7 @@ resource "aws_subnet" "ast-public" {
   vpc_id                  = aws_vpc.ast-test.id
   cidr_block              = "10.0.1.0/24"
   map_public_ip_on_launch = true
-  availability_zone = "ap-southeast-1b"
+  availability_zone       = "ap-southeast-1b"
 
   tags = {
     Name = "ast-public"
@@ -25,7 +25,7 @@ resource "aws_subnet" "ast-public-2" {
   vpc_id                  = aws_vpc.ast-test.id
   cidr_block              = "10.0.3.0/24"
   map_public_ip_on_launch = true
-  availability_zone = "ap-southeast-1a"
+  availability_zone       = "ap-southeast-1a"
 
   tags = {
     Name = "ast-public"
@@ -58,7 +58,7 @@ resource "aws_internet_gateway" "ast-igw" {
 }
 
 resource "aws_eip" "ast-eip" {
-  vpc      = true
+  vpc = true
   tags = {
     Name = "ast-eip"
   }
@@ -119,17 +119,17 @@ resource "aws_security_group" "ast-allow-default" {
   vpc_id      = aws_vpc.ast-test.id
 
   ingress {
-    from_port        = 443
-    to_port          = 443
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
 

@@ -1,5 +1,5 @@
 provider "aws" {
-  region  = "ap-southeast-1"
+  region = "ap-southeast-1"
 }
 
 data "aws_ami" "ubuntu" {
@@ -19,7 +19,7 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_network_interface" "ast-ni" {
-  subnet_id   = var.subnet_id
+  subnet_id       = var.subnet_id
   security_groups = var.security_group_id
 
   tags = {
@@ -30,7 +30,7 @@ resource "aws_network_interface" "ast-ni" {
 resource "aws_instance" "ast-vm" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
-  key_name = var.public_key
+  key_name      = var.public_key
 
   network_interface {
     network_interface_id = aws_network_interface.ast-ni.id
