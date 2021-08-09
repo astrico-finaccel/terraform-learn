@@ -9,9 +9,6 @@ resource "aws_vpc" "ast-test" {
     Name = "ast-test"
   }
 }
-output "vpc_id" {
-  value = aws_vpc.ast-test.id
-}
 
 resource "aws_subnet" "ast-public" {
   vpc_id                  = aws_vpc.ast-test.id
@@ -22,9 +19,6 @@ resource "aws_subnet" "ast-public" {
     Name = "ast-public"
   }
 }
-output "public_subnet_id"{
-  value = aws_subnet.ast-public.id
-}
 
 resource "aws_subnet" "ast-private" {
   vpc_id     = aws_vpc.ast-test.id
@@ -33,9 +27,6 @@ resource "aws_subnet" "ast-private" {
   tags = {
     Name = "ast-private"
   }
-}
-output "private_subnet_id" {
-  value = aws_subnet.ast-private.id
 }
 
 resource "aws_internet_gateway" "ast-igw" {
@@ -123,7 +114,4 @@ resource "aws_security_group" "ast-allow-default" {
   tags = {
     Name = "ast-allow-default"
   }
-}
-output "security_group_id"{
-  value = aws_security_group.ast-allow-default.id
 }

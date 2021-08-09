@@ -27,3 +27,9 @@ module "vm_2" {
   public_key = aws_key_pair.ast-pkey.key_name
 
 }
+
+module "ecr" {
+  source = "./ecr"
+
+  repository_name = "ast-sample-nodejs"
+}

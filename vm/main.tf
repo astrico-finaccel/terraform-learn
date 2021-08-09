@@ -18,13 +18,6 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-variable "subnet_id" {
-  type = string
-}
-variable "security_group_id" {
-  type = list(string)
-}
-
 resource "aws_network_interface" "ast-ni" {
   subnet_id   = var.subnet_id
   security_groups = var.security_group_id
@@ -34,9 +27,6 @@ resource "aws_network_interface" "ast-ni" {
   }
 }
 
-variable "public_key" {
-  type = string
-}
 resource "aws_instance" "ast-vm" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
