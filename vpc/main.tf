@@ -40,6 +40,15 @@ resource "aws_subnet" "ast-private" {
   }
 }
 
+resource "aws_subnet" "ast-private-2" {
+  vpc_id     = aws_vpc.ast-test.id
+  cidr_block = "10.0.4.0/24"
+
+  tags = {
+    Name = "ast-private"
+  }
+}
+
 resource "aws_internet_gateway" "ast-igw" {
   vpc_id = aws_vpc.ast-test.id
 
@@ -89,8 +98,18 @@ resource "aws_route_table_association" "ast-pub-rta" {
   route_table_id = aws_route_table.ast-rt-pub.id
 }
 
+resource "aws_route_table_association" "ast-pub2-rta" {
+  subnet_id      = aws_subnet.ast-public-2.id
+  route_table_id = aws_route_table.ast-rt-pub.id
+}
+
 resource "aws_route_table_association" "ast-priv-rta" {
   subnet_id      = aws_subnet.ast-private.id
+  route_table_id = aws_route_table.ast-rt-priv.id
+}
+
+resource "aws_route_table_association" "ast-priv2-rta" {
+  subnet_id      = aws_subnet.ast-private-2.id
   route_table_id = aws_route_table.ast-rt-priv.id
 }
 

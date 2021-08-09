@@ -25,7 +25,6 @@ module "vm_2" {
   subnet_id = module.vpc.private_subnet_id
   security_group_id = [ module.vpc.security_group_id ]
   public_key = aws_key_pair.ast-pkey.key_name
-
 }
 
 module "ecr" {
@@ -42,12 +41,12 @@ module "alb" {
   public_subnet_ids = module.vpc.public_subnet_ids
 }
 
-# resource "aws_ecs_cluster" "ast-cluster" {
-#   name = "ast-cluster"
-# }
+resource "aws_ecs_cluster" "ast-cluster" {
+  name = "ast-cluster"
+}
 
 # module "ecs_instances" {
-#   source = "../ecs_instances"
+#   source = "./ecs_instances"
 
 #   cluster                 = aws_ecs_cluster.ast-cluster.name
 #   instance_group          = "ast-ecs-instances"
