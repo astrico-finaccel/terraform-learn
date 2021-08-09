@@ -14,7 +14,7 @@ resource aws_key_pair "ast-pkey" {
 module "vm" {
   source = "./vm"
 
-  subnet_id = module.vpc.public_subnet_id
+  subnet_id = module.vpc.public_subnet_ids[0]
   security_group_id = [ module.vpc.security_group_id ]
   public_key = aws_key_pair.ast-pkey.key_name
 }
@@ -33,3 +33,34 @@ module "ecr" {
 
   repository_name = "ast-sample-nodejs"
 }
+
+module "alb" {
+  source = "./alb"
+
+  alb_name = "ast-alb"
+  vpc_id = module.vpc.vpc_id
+  public_subnet_ids = module.vpc.public_subnet_ids
+}
+
+# resource "aws_ecs_cluster" "ast-cluster" {
+#   name = "ast-cluster"
+# }
+
+# module "ecs_instances" {
+#   source = "../ecs_instances"
+
+#   cluster                 = aws_ecs_cluster.ast-cluster.name
+#   instance_group          = "ast-ecs-instances"
+#   private_subnet_ids      = [module.vpc.private_subnet_id]
+#   aws_ami                 = var.ecs_aws_ami
+#   instance_type           = "t3.micro"
+#   max_size                = 2
+#   min_size                = 1
+#   desired_capacity        = 1
+#   vpc_id                  = module.vpc.vpc_id
+#   key_name                = var.key_name
+#   load_balancers          = var.load_balancers
+#   depends_id              = module.vpc.nat_id
+#   custom_userdata         = var.custom_userdata
+#   cloudwatch_prefix       = var.cloudwatch_prefix
+# }

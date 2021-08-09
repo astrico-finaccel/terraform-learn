@@ -1,0 +1,29 @@
+# references:
+# - https://pre-commit.com/hooks.html
+# - https://github.com/pre-commit/pre-commit-hooks
+# - https://github.com/gruntwork-io/pre-commit
+# - https://github.com/antonbabenko/pre-commit-terraform
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.4.0
+    hooks:
+      - id: detect-private-key
+      - id: detect-aws-credentials
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: check-json
+      # - id: no-commit-to-branch
+      #   args:
+      #     - --branch=master
+
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.12
+    hooks:
+      - id: terraform-fmt
+      - id: tflint
+
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.45.0
+    hooks:
+      - id: terraform_docs
