@@ -1,3 +1,4 @@
+# ECS Instance Role
 resource "aws_iam_role" "ecs_instance_role" {
   name = "ast_ecs_instance_role"
 
@@ -33,6 +34,8 @@ resource "aws_iam_role_policy_attachment" "ecs_ec2_cloudwatch_role" {
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
 }
 
+
+# ALB Role
 resource "aws_iam_role" "ecs_lb_role" {
   name = "ast_ecs_lb_role"
   path = "/ecs/"
@@ -57,3 +60,4 @@ resource "aws_iam_role_policy_attachment" "ecs_lb" {
   role       = aws_iam_role.ecs_lb_role.id
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole"
 }
+

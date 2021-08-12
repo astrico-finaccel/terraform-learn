@@ -64,4 +64,22 @@ module "ecs_instances" {
   key_name                = aws_key_pair.ast-pkey.key_name
   depends_id              = module.vpc.nat_id
   iam_instance_profile_id = module.role.ecs_instance_role_id
+  cloudwatch_prefix       = "ast-log"
+}
+
+module "ecs_service_nodejs" {
+  source = "./ecs_service"
+
+  service_name      = "sample-nodejs"
+  cluster_id        = aws_ecs_cluster.ast-cluster.id
+  desired_count     = 1
+  task_definition   = "nodejs-test-test:1"
+  container_name    = "nodejs-test"
+  container_port    = 8000
+  health_check_path = "/healthcheck"
+  subnets           = module.vpc.private_subnet_ids
+  security_groups   = [module.vpc.security_group_id]
+  vpc_id            = module.vpc.vpc_id
+  alb_name          = module.alb.alb_name
+  alb_listener_arn  = module.alb.alb_listener_arn
 }

@@ -25,6 +25,7 @@ resource "aws_launch_configuration" "launch" {
   security_groups      = [aws_security_group.instance.id]
   iam_instance_profile = var.iam_instance_profile_id
   key_name             = var.key_name
+  user_data            = data.template_file.user_data.rendered
 
   lifecycle {
     create_before_destroy = true
@@ -66,3 +67,14 @@ resource "aws_autoscaling_group" "asg" {
   }
 }
 
+data "template_file" "user_data" {
+  template = file("${path.module}/user_data.sh")
+
+  vars = {
+    ecs_config        = var.ecs_config
+    ecs_logging       = var.ecs_logging
+    cluster_name      = var.cluster
+    custom_userdata   = var.custom_userdata
+    cloudwatch_prefix = var.cloudwatch_prefix
+  }
+}
